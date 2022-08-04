@@ -6,7 +6,7 @@ An application that tracks relevant information related to periodic hive inspect
 Two APIs that I'd use would be just a general weather API, but also one specific to pollen count and pollen type, as pollen serves as a good indicator of the kind of nectar that the bees would be foraging and this translates (somewhat) into the flavor of the honey they produce.
 
 Weather: OpenWeather - https://openweathermap.org/api
-    Current temperature and humidity (wind speed and precipitation)
+    Current temperature and humidity (wind speed and precipitation?)
 
 Pollen count and type: Ambee (not specific to bees) - https://www.getambee.com/api/pollen
 
