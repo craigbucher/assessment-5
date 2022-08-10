@@ -18,6 +18,9 @@ class AppUser(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = [] # Email and password are required by default
 
+    def __str__(self):
+        return f"ID: {self.id}, Name: {self.first_name} {self.last_name}, email: {self.email}"
+
 class Hive(models.Model):
     nickname = models.CharField(max_length=32, blank=False, verbose_name="Hive frames")
     location_name = models.CharField(max_length=32, blank=True, verbose_name="Hive location") 
@@ -31,7 +34,8 @@ class Hive(models.Model):
     breed=models.CharField(max_length = 9, verbose_name="Bee breed") #choices?
     removal_date=models.DateField(blank=True, verbose_name="Date removed")
     photo_url=models.CharField(max_length = 256, blank=True, verbose_name="Photo URL")
-     
+    notes=models.TextField(blank=True) #efault form widget for this field is TextArea
+
     def __str__(self):
         return f"ID: {self.id} and Title: {self.nickname}"
 

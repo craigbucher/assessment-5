@@ -7,28 +7,5 @@
             "description": "Posts which don't fit well into any other category"
         }
     },
-    {
-        "model": "assess4_app.Category",
-        "pk": 2,
-        "fields": {
-            "name": "For Sale",
-            "description": "Items for sale"
-        }
-    },
-    {
-        "model": "assess4_app.Category",
-        "pk": 3,
-        "fields": {
-            "name": "For Rent",
-            "description": "Properties available to lease"
-        }
-    },
-    {
-        "model": "assess4_app.Category",
-        "pk": 4,
-        "fields": {
-            "name": "Wanted",
-            "description": "Items users are looking to purchase"
-        }
-    }
+    {}
 ]

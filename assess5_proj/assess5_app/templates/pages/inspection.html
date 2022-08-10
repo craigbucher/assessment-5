@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Inspection Details</title>
+</head>
+<body>
+    <h1>This is the Inspection page</h1>
+    <h3>User:&emsp;&emsp;</h3>
+    <h3>Inspection ID:</h3>
+    <form action="action_page.php" method="POST">
+    <div>
+        <label for="inspection_date">Inspection Date:</label>
+        <input type="date" id="inspection_date" name="inspection_date" required>
+    </div>
+    <br>
+    <div>
+        <label for="temperature">Temperature:</label>
+        <input type="text" id="temperature" name="temperature" placeholder="temperature">
+        <label for="humidity">&emsp;Humidity:</label>
+        <input type="text" id="humidity" name="humidity" placeholder="humidity">
+    </div>
+    <br>
+    <div>
+        <label for="pollen">Pollen type(s):</label>
+        <input type="text" id="pollen" name="pollen" placeholder="pollen">
+        <label for="count">&emsp;Pollen count:</label>
+        <input type="text" id="count" name="count" placeholder="count">
+    </div>
+    
+    <div>
+        <br>
+
+
+        <label for="queen">Queen sighted?&ensp;</label>
+        <label for="yes">Yes</label>
+        <input type="radio" id="yes" name="queen" value="yes">
+        <label for="no">No</label>
+        <input type="radio" id="no" name="queen" value="no" checked>
+
+        <label for="cells">&emsp;Queen cells?&ensp;</label>
+        <label for="Yes">Yes</label>
+        <input type="radio" id="Yes" name="cells" value="Yes">
+        <label for="No">No</label>
+        <input type="radio" id="No" name="cells" value="No" checked>
+
+        <label for="swarm">&emsp;Swarmed?&ensp;</label>
+        <label for="Yes">Yes</label>
+        <input type="radio" id="Yes" name="swarm" value="Yes">
+        <label for="No">No</label>
+        <input type="radio" id="No" name="swarm" value="No" checked>
+    </div>
+    <br>
+    <div>
+        <label for="food">Feeding:</label>
+        <select id="food" name="food">
+            <option value="none"></option>
+            <option value="syrup">Syrup</option>
+            <option value="polle">Pollen supplement</option>
+        </select>
+
+        <label for="supers">&emsp;Honey supers on?&ensp;</label>
+        <label for="Yes">Yes</label>
+        <input type="radio" id="Yes" name="supers" value="Yes">
+        <label for="No">No</label>
+        <input type="radio" id="No" name="supers" value="No" checked>
+    </div>
+    <br>
+    <div>
+        <label for="disease">Disease(s)/parasite(s) evident?</label>
+        <input type="text" id="disease" name="disease" placeholder="disease">
+        <label for="meds">Medication(s) applied:</label>
+        <input type="text" id="meds" name="meds" placeholder="meds">
+    </div>
+    <br>
+    <div>
+        <label for="notes">Notes:</label>
+        <br>
+        <textarea id="notes" name="notes" rows="6" cols="70" placeholder="Please enter other notes about the inspection here.">
+        </textarea>
+    </div>
+    <br>
+    <div>
+        <input type="reset">
+        <input type="submit">
+    </div>
+</form>
+</body>
+</html>
