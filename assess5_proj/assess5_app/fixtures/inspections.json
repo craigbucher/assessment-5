@@ -1,12 +1,66 @@
 [
     {
-        "model": "assess4_app.Post",
+        "model": "assess5_app.Inspection",
         "pk": 1,
         "fields": {
-            "title": "Just Testing",
-            "content": "New to this whole Craiglist thing - did this work?",
-            "category": 1
+            "hive_id": 1,
+            "inspection_date": "2022-08-09",
+            "temperature": 66.9,
+            "humidity": 59,
+            "queen_sight": "True",
+            "queen_cells": "False",
+            "has_swarmed": "False",
+            "feeding": "Syrup",
+            "meds": "None",
+            "notes": "Sample notes for this inspection"
         }
     },
-    {}
+    {
+        "model": "assess5_app.Inspection",
+        "pk": 2,
+        "fields": {
+            "hive_id": 1,
+            "inspection_date": "2022-08-10",
+            "temperature": 75.3,
+            "humidity": 41,
+            "queen_sight": "True",
+            "queen_cells": "False",
+            "has_swarmed": "False",
+            "feeding": "Syrup",
+            "meds": "None",
+            "notes": "More sample notes."
+        }
+    },
+    {
+        "model": "assess5_app.Inspection",
+        "pk": 3,
+        "fields": {
+            "hive_id": 2,
+            "inspection_date": "2022-08-09",
+            "temperature": 81.4,
+            "humidity": 56,
+            "queen_sight": "True",
+            "queen_cells": "False",
+            "has_swarmed": "False",
+            "disease": "Tracheal mites",
+            "meds": "Menthol crystals",
+            "notes": "Sample notes for hive 2"
+        }
+    },
+    {
+        "model": "assess5_app.Inspection",
+        "pk": 4,
+        "fields": {
+            "hive_id": 2,
+            "inspection_date": "2022-08-10",
+            "temperature": 79.1,
+            "humidity": 63,
+            "queen_sight": "True",
+            "queen_cells": "False",
+            "has_swarmed": "False",
+            "disease": "Tracheal mites",
+            "meds": "Menthol crystals",
+            "notes": "Sample notes for hive 2"
+        }
+    }
 ]

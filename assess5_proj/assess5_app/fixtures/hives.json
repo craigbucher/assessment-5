@@ -1,11 +1,32 @@
 [
     {
-        "model": "assess4_app.Category",
+        "model": "assess5_app.Hive",
         "pk": 1,
         "fields": {
-            "name": "General",
-            "description": "Posts which don't fit well into any other category"
+            "nickname": "Hive1",
+            "location_name": "Back yard",
+            "loc_lat": "41.885311",
+            "loc_long": "-87.6285002",
+            "install_date": "2022-08-01",
+            "frames": 10,
+            "active": "True",
+            "breed": "Italian",
+            "notes": "These are starter notes for this hive"
         }
     },
-    {}
+    {
+        "model": "assess5_app.Hive",
+        "pk": 2,
+        "fields": {
+            "nickname": "Hive2",
+            "location_name": "Somewhere else",
+            "loc_lat": "38.81100071",
+            "loc_long": "-77.0615375",
+            "install_date": "2022-06-01",
+            "frames": 10,
+            "active": "True",
+            "breed": "Carniolan",
+            "notes": "These are different starter notes"
+        }
+    }
 ]

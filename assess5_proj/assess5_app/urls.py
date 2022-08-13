@@ -2,12 +2,17 @@ from django.urls import path
 from . import views
           
 urlpatterns = [
+    
     # serves index.html which will load our react app
     path('', views.index),
-    path('test/', views.test, name = 'test'),
     # API endpoints - return JSON data
-    # path('signup', views.sign_up),
-    # path('login', views.log_in),
-    # path('logout', views.log_out),
-    # path('whoami', views.who_am_i),
+    path('test/', views.test, name = 'test'),
+    path('weather/', views.weather, name = 'weather'),
+    path('location/', views.location, name = 'location'),
+    path('pollen/', views.pollen, name = 'pollen'),
+    # handles requests from React
+    path('signup/', views.sign_up),
+    path('login/', views.log_in),
+    path('logout/', views.log_out),
+    path('whoami/', views.who_am_i),
 ]
