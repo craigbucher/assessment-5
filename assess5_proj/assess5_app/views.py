@@ -4,13 +4,15 @@ from django.core import serializers
 from django.contrib.auth import authenticate, login, logout
 from dotenv import load_dotenv
 import os
+import json
 import requests
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
-from .models import AppUser as User
+from .models import AppUser as User, Hive, Inspection
 
 load_dotenv()
 
+# load the homepage (of single-page site)
 def index(request):
     print('Index / Login page')
     theIndex = open('static/index.html').read()
@@ -19,6 +21,99 @@ def index(request):
 #########################################################
 #################### CRUD Stuff #########################
 #########################################################
+
+@api_view(['GET', 'POST', 'DELETE'])
+def hives(request, hive_id):
+    # POST request - create a new Hive record
+    if request.method == 'POST':
+        try:
+            print('received a POST request for Hives')
+            # nickname = request.data['nickname']
+            # print(nickname)
+            newHive = Hive(nickname = request.data['nickname'], location_name=request.data['location_name'], loc_lat=request.data['loc_lat'], loc_long=request.data['loc_long'], install_date=request.data['install_date'], frames=request.data['frames'], depth=request.data['depth'], active=request.data['active'], breed=request.data['breed'], removal_date=request.data['removal_date'], photo_url=request.data['photo_url'])
+            newHive.save()
+            return JsonResponse({'status': 'complete'})
+        except:
+            return HttpResponse("Error: malformed request.")
+
+    ## DELETE method deletes selected hive ID
+    elif request.method == "DELETE":
+        try:
+            print(f'Received a DELETE request for Hive {hive_id}')
+            hive = Hive.objects.all().get(id = hive_id)
+            print(hive)
+            hive.delete()
+            return JsonResponse({'status': f'record {hive_id} deleted'})
+        except:
+            return HttpResponse("Error: malformed request.")
+        
+    # default GET request - returns list of all hives in JSON format
+    elif request.method == 'GET':
+        print('received a GET request for Hives')
+        hive_list = []
+        hives = Hive.objects.all()
+        for i in range(0, len(hives)):
+            category = {}
+            category['id'] = hives[i].id
+            category['nickname'] = hives[i].nickname
+            category['location_name'] = hives[i].location_name
+            category['loc_lat'] = hives[i].loc_lat
+            category['loc_long'] = hives[i].loc_long
+            category['install_date'] = hives[i].install_date
+            category['frames'] = hives[i].frames
+            category['depth'] = hives[i].depth
+            category['active'] = hives[i].active
+            category['breed'] = hives[i].breed
+            category['removal_date'] = hives[i].removal_date
+            category['photo_url'] = hives[i].photo_url
+            category['notes'] = hives[i].notes
+            hive_list.append(category)
+        response = {}
+        response['hives'] = hive_list
+        return JsonResponse(response)
+
+@api_view(['GET', 'POST'])
+def inspections(request):
+    # POST request - create a new Inspection record
+    if request.method == 'POST':
+        # try:
+            print('received a POST request for Inspections')
+            # appuser = request.data['appuser']
+            # print(appuser)
+            newInspection = Inspection(appuser_id = request.data['appuser'], curr_hive_id=request.data['curr_hive'], inspection_date=request.data['inspection_date'], temperature=request.data['temperature'], humidity=request.data['humidity'], pollen_type=request.data['pollen_type'], pollen_count=request.data['pollen_count'], queen_sight=request.data['queen_sight'], brood=request.data['brood'], queen_cells=request.data['queen_cells'], has_swarmed=request.data['has_swarmed'], supers=request.data['supers'], feeding=request.data['feeding'], disease=request.data['disease'], meds=request.data['meds'], notes=request.data['notes'])
+            print(newInspection)
+            newInspection.save()
+            return JsonResponse({'status': 'complete'})
+        # except:
+        #     return HttpResponse("Error: malformed request.")
+    # default GET request - returns list of all inspections in JSON format
+    elif request.method == 'GET':
+        print('received a GET request for Inspections')
+        inspection_list = []
+        inspections = Inspection.objects.all()
+        # print(inspections[3].hive.id)
+        for i in range(0, len(inspections)):
+            category = {}
+            category['id'] = inspections[i].id
+            category['hive'] = inspections[i].hive.id
+            category['userID'] = inspections[i].appuser.id
+            category['inspection_date'] = inspections[i].inspection_date
+            category['temperature'] = inspections[i].temperature
+            category['humidity'] = inspections[i].humidity
+            category['pollen_type'] = inspections[i].pollen_type
+            category['pollen_count'] = inspections[i].pollen_count
+            category['queen_sight'] = inspections[i].queen_sight
+            category['queen_cells'] = inspections[i].queen_cells
+            category['has_swarmed'] = inspections[i].has_swarmed
+            category['supers'] = inspections[i].supers
+            category['feeding'] = inspections[i].feeding
+            category['disease'] = inspections[i].disease
+            category['meds'] = inspections[i].meds
+            category['notes'] = inspections[i].notes
+            inspection_list.append(category)
+        response = {}
+        response['inspections'] = inspection_list
+        return JsonResponse(response)
 
 
 #########################################################
