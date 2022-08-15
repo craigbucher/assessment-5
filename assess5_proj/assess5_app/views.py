@@ -1,7 +1,10 @@
+from curses.ascii import HT
+from logging import NullHandler
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 from django.contrib.auth import authenticate, login, logout
+# from django.contrib.auth.decorators import login_required
 from dotenv import load_dotenv
 import os
 import json
@@ -23,20 +26,32 @@ def index(request):
 #########################################################
 
 @api_view(['GET', 'POST', 'DELETE'])
-def hives(request, hive_id):
+def hives(request, hive_id=None):
     # POST request - create a new Hive record
     if request.method == 'POST':
         try:
             print('received a POST request for Hives')
-            # nickname = request.data['nickname']
-            # print(nickname)
-            newHive = Hive(nickname = request.data['nickname'], location_name=request.data['location_name'], loc_lat=request.data['loc_lat'], loc_long=request.data['loc_long'], install_date=request.data['install_date'], frames=request.data['frames'], depth=request.data['depth'], active=request.data['active'], breed=request.data['breed'], removal_date=request.data['removal_date'], photo_url=request.data['photo_url'])
+            # print(request.data)
+            nickname = request.data['nickname']
+            install_date = request.data['install_date']
+            location_name = request.data['location_name']
+            loc_lat = request.data['loc_lat']
+            loc_long = request.data['loc_long']
+            depth = request.data['depth']
+            frames = request.data['frames']
+            active = request.data['active']
+            breed = request.data['breed']
+            notes = request.data['notes']
+            # newHive = Hive(nickname = request.data['nickname'], location_name=request.data['location_name'], loc_lat=request.data['loc_lat'], loc_long=request.data['loc_long'], install_date=request.data['install_date'], frames=request.data['frames'], depth=request.data['depth'], active=request.data['active'], breed=request.data['breed'], notes=request.data['notes'])
+            # newHive = Hive(nickname = 'Test hive', location_name='Chicago, IL', loc_lat=41.5852, loc_long=-87.8059, install_date='2022-08-15', frames=8, depth='Shallow', active=True, breed='Russian', notes='Some notes for this hive')
+            newHive = Hive(nickname = nickname, location_name=location_name, loc_lat=loc_lat, loc_long=loc_long, install_date=install_date, frames=frames, depth=depth, active=active, breed=breed, notes=notes)
+            print(newHive)
             newHive.save()
             return JsonResponse({'status': 'complete'})
         except:
-            return HttpResponse("Error: malformed request.")
+            return HttpResponse('Error: malformed request')
 
-    ## DELETE method deletes selected hive ID
+    # DELETE method deletes selected hive ID
     elif request.method == "DELETE":
         try:
             print(f'Received a DELETE request for Hive {hive_id}')
@@ -64,11 +79,10 @@ def hives(request, hive_id):
             category['depth'] = hives[i].depth
             category['active'] = hives[i].active
             category['breed'] = hives[i].breed
-            category['removal_date'] = hives[i].removal_date
-            category['photo_url'] = hives[i].photo_url
             category['notes'] = hives[i].notes
             hive_list.append(category)
         response = {}
+        print(hive_list)
         response['hives'] = hive_list
         return JsonResponse(response)
 
@@ -76,7 +90,7 @@ def hives(request, hive_id):
 def inspections(request):
     # POST request - create a new Inspection record
     if request.method == 'POST':
-        # try:
+        try:
             print('received a POST request for Inspections')
             # appuser = request.data['appuser']
             # print(appuser)
@@ -84,18 +98,20 @@ def inspections(request):
             print(newInspection)
             newInspection.save()
             return JsonResponse({'status': 'complete'})
-        # except:
-        #     return HttpResponse("Error: malformed request.")
+        except:
+            return HttpResponse("Error: malformed request.")
+    
     # default GET request - returns list of all inspections in JSON format
     elif request.method == 'GET':
         print('received a GET request for Inspections')
+        print(request.user)
         inspection_list = []
         inspections = Inspection.objects.all()
         # print(inspections[3].hive.id)
         for i in range(0, len(inspections)):
             category = {}
             category['id'] = inspections[i].id
-            category['hive'] = inspections[i].hive.id
+            category['curr_hive'] = inspections[i].curr_hive.id
             category['userID'] = inspections[i].appuser.id
             category['inspection_date'] = inspections[i].inspection_date
             category['temperature'] = inspections[i].temperature
@@ -124,16 +140,16 @@ def inspections(request):
 @api_view(['POST'])
 def sign_up(request):
     try:
-        User.objects.create_user(username=request.data['email'], password=request.data['password'], email=request.data['email'])
+        User.objects.create_user(username=request.data['email'], password=request.data['password'], email=request.data['email'], first_name=request.data['first_name'], last_name=request.data['last_name'])
     except Exception as e:
         print(str(e))
-    return HttpResponse('hi')
+    return HttpResponse('Accout creation successful')
 
 ###### Login #######
 @api_view(['POST'])
 def log_in(request):
-    print(dir(request))           # Django restframework replaces request object with similar one it thinks is more useful
-    print(dir(request._request))  # original 'plain' django request object
+    # print(dir(request))           # Django restframework replaces request object with similar one it thinks is more useful
+    # print(dir(request._request))  # original 'plain' django request object
 
     # DRF assumes that the body is JSON, and automatically parses it into a dictionary at request.data
     email = request.data['email']
@@ -144,39 +160,40 @@ def log_in(request):
     print('user?')
     # print(user.email)
     # print(user.password)
-    # if user is not None:
-    #     if user.is_active:
-    #         try:
-    #             # access the base request, not the DRF request
-    #             # this starts a login session for this user
-    #             login(request._request, user)
-    #         except Exception as e:
-    #             print('except')
-    #             print(str(e))
-    #         return HttpResponse('success!')
-    #         # Redirect to a success page.
-    #     else:
-    #         return HttpResponse('not active!')
-    #         # Return a 'disabled account' error message
-    # else:
-    #     return HttpResponse('no user!')
-    #     # Return an 'invalid login' error message.
-    return HttpResponse('end of view')
+    if user is not None:
+        if user.is_active:
+            try:
+                # access the base request, not the DRF request
+                # this starts a login session for this user
+                login(request._request, user)
+            except Exception as e:
+                print('except')
+                print(str(e))
+            return HttpResponse('Login success!')
+            # Redirect to a success page.
+        else:
+            return HttpResponse('Account not active!')
+            # Return a 'disabled account' error message
+    else:
+        return HttpResponse('No user with that email!')
+        # Return an 'invalid login' error message.
 
-###### Login #######
+
+###### Logout #######
 @api_view(['POST'])
 def log_out(request):
     logout(request)
-    return JsonResponse({'success':True})
+    return JsonResponse({'Logout':True})
 
 ###### Who am I #######
 @api_view(['GET'])
 def who_am_i(request):
+    print('received a WHO AM I request')
     # Make sure that you don't send sensitive information to the client, such as password hashes
     # raise Exception('oops')
     if request.user.is_authenticated:
         data = serializers.serialize("json", [request.user], fields=['email', 'username'])
-
+        print('whoami data:' + data)
         return HttpResponse(data)
     else:
         return JsonResponse({'user':None})
@@ -190,7 +207,7 @@ def weather(request):
     print('received a WEATHER request')
     lat = request.GET.get('latitude')
     long = request.GET.get('longitude')
-    print(lat,long)
+    # print(lat,long)
     APPID = os.environ['weather_APPID']
     url = f'https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={long}&APPID={APPID}&units=imperial'
     response = requests.get(url)
@@ -201,7 +218,7 @@ def location(request):
     print('received a LOCATION request')
     api_key = os.environ['location_key']
     response = requests.get(f"https://ipgeolocation.abstractapi.com/v1/?api_key={api_key}")
-    print(response.content)
+    # print(response.content)
     return HttpResponse(response.content)
 
 # queries pollen count api at https://api.ambeedata.com/latest/pollen/by-lat-lng

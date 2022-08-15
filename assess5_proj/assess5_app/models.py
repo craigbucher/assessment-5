@@ -32,7 +32,6 @@ class Hive(models.Model):
     active=models.BooleanField(default=True, verbose_name="Hive is active")
     breed=models.CharField(max_length = 9, default=None, verbose_name="Bee breed") #choices?
     removal_date=models.DateField(blank=True, null=True, default=None, verbose_name="Date removed")
-    photo_url=models.CharField(max_length = 256, blank=True, null=True, default=None, verbose_name="Photo URL")
     notes=models.TextField(blank=True, null=True, default=None) #default form widget for this field is TextArea
 
     def __str__(self):
