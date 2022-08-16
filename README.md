@@ -14,10 +14,14 @@ Pollen count and type: Ambee (not specific to bees) - https://www.getambee.com/a
 
 ## Database Models
 ### Apiarist/beekeeper (AbstractUser)
-    - used for authentication
-    - used to filter for beekeeper's hives
+    (used for authentication)
+    (used to filter for beekeeper's hives)
+    - email (models.EmailField)
+    - first_name (CharField 16)
+    - last_name (CharField 16)
+    - Other?
 ### Hive
-    - ID specific to each individual hive (auto-generated)
+    - ID (specific to each individual hive) (auto-generated)
     - nickname (CharField 32)
     - location (CharField 32) OR
         - location.lat ()

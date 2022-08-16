@@ -92,14 +92,32 @@ def inspections(request):
     if request.method == 'POST':
         try:
             print('received a POST request for Inspections')
-            # appuser = request.data['appuser']
+            print(request.user.id)
+            # print(request.data)
+            # # appuser = request.data['appuser']
             # print(appuser)
-            newInspection = Inspection(appuser_id = request.data['appuser'], curr_hive_id=request.data['curr_hive'], inspection_date=request.data['inspection_date'], temperature=request.data['temperature'], humidity=request.data['humidity'], pollen_type=request.data['pollen_type'], pollen_count=request.data['pollen_count'], queen_sight=request.data['queen_sight'], brood=request.data['brood'], queen_cells=request.data['queen_cells'], has_swarmed=request.data['has_swarmed'], supers=request.data['supers'], feeding=request.data['feeding'], disease=request.data['disease'], meds=request.data['meds'], notes=request.data['notes'])
-            print(newInspection)
+            curr_hive = request.data['curr_hive']
+            inspection_date = request.data['inspection_date']
+            temperature = request.data['temperature']
+            humidity = request.data['humidity']
+            pollen_type = request.data['pollen_type']
+            queen_sight = request.data['queen_sight']
+            queen_cells = request.data['queen_cells']
+            has_swarmed = request.data['has_swarmed']
+            feeding = request.data['feeding']
+            supers = request.data['supers']
+            disease = request.data['disease']
+            meds = request.data['meds']
+            notes = request.data['notes']
+            # newInspection = Inspection(appuser_id = request.user, curr_hive_id=request.data['curr_hive'], inspection_date=request.data['inspection_date'], temperature=request.data['temperature'], humidity=request.data['humidity'], pollen_type=request.data['pollen_type'], pollen_count=request.data['pollen_count'], queen_sight=request.data['queen_sight'], brood=request.data['brood'], queen_cells=request.data['queen_cells'], has_swarmed=request.data['has_swarmed'], supers=request.data['supers'], feeding=request.data['feeding'], disease=request.data['disease'], meds=request.data['meds'], notes=request.data['notes'])
+            newInspection = Inspection(appuser_id = request.user.id, curr_hive_id=curr_hive, inspection_date=inspection_date, temperature=temperature, humidity=humidity, pollen_type=pollen_type, queen_sight=queen_sight, queen_cells=queen_cells, has_swarmed=has_swarmed, supers=supers, feeding=feeding, disease=disease, meds=meds, notes=notes)
+            # print(newInspection)
             newInspection.save()
             return JsonResponse({'status': 'complete'})
-        except:
-            return HttpResponse("Error: malformed request.")
+        except Exception as e: print(e)
+        return HttpResponse("Error: malformed request.")
+        # except:
+        #     return HttpResponse("Error: malformed request.")
     
     # default GET request - returns list of all inspections in JSON format
     elif request.method == 'GET':
@@ -117,7 +135,7 @@ def inspections(request):
             category['temperature'] = inspections[i].temperature
             category['humidity'] = inspections[i].humidity
             category['pollen_type'] = inspections[i].pollen_type
-            category['pollen_count'] = inspections[i].pollen_count
+            # category['pollen_count'] = inspections[i].pollen_count
             category['queen_sight'] = inspections[i].queen_sight
             category['queen_cells'] = inspections[i].queen_cells
             category['has_swarmed'] = inspections[i].has_swarmed
@@ -140,7 +158,7 @@ def inspections(request):
 @api_view(['POST'])
 def sign_up(request):
     try:
-        User.objects.create_user(username=request.data['email'], password=request.data['password'], email=request.data['email'], first_name=request.data['first_name'], last_name=request.data['last_name'])
+        User.objects.create_user(username=request.data['first_name'], password=request.data['password'], email=request.data['email'], first_name=request.data['first_name'], last_name=request.data['last_name'])
     except Exception as e:
         print(str(e))
     return HttpResponse('Accout creation successful')
@@ -175,9 +193,8 @@ def log_in(request):
             return HttpResponse('Account not active!')
             # Return a 'disabled account' error message
     else:
-        return HttpResponse('No user with that email!')
+        return HttpResponse('Invalid login credentials')
         # Return an 'invalid login' error message.
-
 
 ###### Logout #######
 @api_view(['POST'])
