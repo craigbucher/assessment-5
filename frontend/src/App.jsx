@@ -11,8 +11,10 @@ import NavBarUnauth from './components/NavbarUnauth'
 import Hives from './pages/Hives'
 import NewHive from './pages/NewHive'
 import HiveList from './pages/HiveList'
-// import Inspections from './pages/Inspections'
-import ListInspections from './pages/ListInspections'
+import HiveDetail from './pages/HiveDetail';
+import Inspections from './pages/Inspections'
+import InspectionList from './pages/InspectionList'
+import InspectionDetail from './pages/InspectionDetail'
 import NewInspection from './pages/NewInspection'
 import About from './pages/About'
 import NotFound from './pages/NotFound';
@@ -84,11 +86,16 @@ function App() {
             <Route path="/hives" element={<Hives />} />
             <Route path="/newhive" element={<NewHive />} />
             <Route path="/hivelist" element={<HiveList />} />
-            {/* <Route path="/inspections" element={<Inspections />} /> */}
+            <Route path="/hivedetail" element={<HiveDetail />} />
+            <Route path="/inspections" element={<Inspections />} />
             <Route path="/newinspection" element={<NewInspection />} />
-            <Route path="/inspectionlist" element={<ListInspections />} />
+            <Route path="/inspectionlist" element={<InspectionList />} />
+            <Route path="/inspectiondetail" element={<InspectionDetail />} />
             <Route path="/about" element={<About />} />
             <Route path="/test" element={<Test />} />
+            <Route path="/test2" element={<main style={{ padding: "1rem" }}>
+              <p>This is test text</p>
+            </main>} />
             <Route path="/login" element={<Login />} />
             <Route path="/logout" element={<Logout />} />
             <Route path="/register" element={<Register />} />

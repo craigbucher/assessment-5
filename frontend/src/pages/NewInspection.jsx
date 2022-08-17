@@ -12,9 +12,9 @@ const NewInspection = () => {
 
     //////////////////////// Date /////////////////////////
     // calculate today's date in yyyy-mm-dd format
-    let today = new Date()
-    today = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
-    // console.log(today)
+    let thisday = new Date()
+    thisday = thisday.getFullYear() + '-' + String(thisday.getMonth() + 1).padStart(2, '0') + '-' + String(thisday.getDate()).padStart(2, '0');
+    const [today, setToday] = useState(thisday)
 
     ////////////////////// Location ////////////////////////
     const [lat, setLat] = useState(null)
@@ -209,7 +209,7 @@ const NewInspection = () => {
             <form onSubmit={handleSubmit}>
                 <div>
                     <label for="inspection_date">Inspection Date:  </label>
-                    <input type="date" id="inspection_date" name="inspection_date" value={today} required />
+                    <input type="date" id="inspection_date" name="inspection_date" value={today} onChange={(e) => setToday(e.target.value)} required />
                 </div>
                 <br />
                 <div>

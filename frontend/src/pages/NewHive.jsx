@@ -13,11 +13,9 @@ const NewHive = () => {
 
     ///////////////////////// Date /////////////////////////
     // calculate today's date in yyyy-mm-dd format
-    // const [install, setInstall] = useState(null)
-    let today = new Date()
-    today = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
-    // setInstall(today)
-    // console.log(today)
+    let thisday = new Date()
+    thisday = thisday.getFullYear() + '-' + String(thisday.getMonth() + 1).padStart(2, '0') + '-' + String(thisday.getDate()).padStart(2, '0');
+    const [today, setToday] = useState(thisday)
 
     /////////////////////// Location //////////////////////
     const [lat, setLat] = useState(null)
@@ -125,8 +123,7 @@ const NewHive = () => {
                     <label for="nickname">Nickname:  </label>
                     <input type="text" id="nickname" name="nickname" placeholder="Nickname" required />
                     <label for="install_date">&emsp;Install date:  </label>
-                    {/* <input type="date" id="install_date" name="install_date" value={today} /> */}
-                    <input type="date" id="install_date" name="install_date" required />
+                    <input type="date" id="install_date" name="install_date" value={today} onChange={(e) => setToday(e.target.value)} />
                 </div>
                 <br />
                 <div>

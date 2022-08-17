@@ -8,13 +8,13 @@ const Hives = () => {
     async function getHives() {
         let response = await axios.get('/hives');
         // console.log(response.data.hives[0])
-        let test = response.data.hives
+        let result = response.data.hives
         // for (let i = 0; i < test.length; i++) {
         //     hiveList.push(test[i])
         // }
         // console.log(hiveList)
         // setHives(response.data.hives)
-        setHives(test)
+        setHives(result)
     }
 
     useEffect(() => {

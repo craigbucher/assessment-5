@@ -1,28 +1,74 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react';
-import Delete from './Delete'
 import { useNavigate } from "react-router-dom";
+import DeleteHive from './Delete';
 
-const HiveDetail = () => {
+const HiveDetail = (hive_id) => {
     // console.log('Hive loaded')
     let navigate = useNavigate();
+    hive_id = 1;
+    ///////////////////////////////////////////////////////
+    ///////////////// Retrieve Hive Info //////////////////
+    ///////////////////////////////////////////////////////
 
-    ///////////////////////////////////////////////////////
-    /////////////////////// Logging ///////////////////////
-    ///////////////////////////////////////////////////////
+    const [nickname, setNickname] = useState(null)
+    const [install_date, setInstallDate] = useState(null)
+    const [location_name, setLocationName] = useState(null)
+    const [loc_lat, setLocLat] = useState(null)
+    const [loc_long, setLocLong] = useState(null)
+    const [depth, setDepth] = useState(null)
+    const [frames, setFrames] = useState(null)
+    const [active, setActive] = useState(null)
+    const [breed, setBreed] = useState(null)
+    const [notes, setNotes] = useState(null)
+
+    async function update() {
+        let response = await axios.get(`/hives/${hive_id}`);
+        setNickname(response.data.nickname)
+        setInstallDate(response.data.install_date)
+        setLocationName(response.data.location_name)
+        setLocLat(response.data.loc_lat)
+        setLocLong(response.data.loc_long)
+        setDepth(response.data.depth)
+        setFrames(response.data.frames)
+        setActive(response.data.active)
+        setBreed(response.data.breed)
+        setNotes(response.data.notes)
+    }
+
+    // document.gendersForm.frames.value = frames;
+    // axios.get(`/hives/${hive_id}`).then((response) => {
+    //     // response.data is the hive object for specified hive_id
+    //     console.log(response.data)
+    // setNickname(response.data.nickname)
+    // setInstallDate(response.data.install_date)
+    // setLocationName(response.data.location_name)
+    // setLocLat(response.data.loc_lat)
+    // setLocLong(response.data.loc_long)
+    // setDepth(response.data.depth)
+    // setFrames(response.data.frames)
+    // setActive(response.data.active)
+    // setBreed(response.data.breed)
+    // setNotes(response.data.notes)
+    // })
+
 
     useEffect(() => {
-        location()
+        update()
+        // document.hivesForm.frames.value = frames;
     }, [])
-
-
 
     ///////////////////////////////////////////////////////
     /////////////////// Form Submission ///////////////////
     ///////////////////////////////////////////////////////
 
+    function deleteHive() {
+
+    }
+
     const handleSubmit = function (event) {
         event.preventDefault()
+        console.log('form submitted')
 
         // console.log('0 - nickname', event.target[0].value)
         // console.log('1 - install_date', event.target[1].value)
@@ -58,44 +104,31 @@ const HiveDetail = () => {
         //     }
         // }
         // console.log(selectedActive)
-
-
-        axios.post('/hives/', { nickname: event.target[0].value, install_date: event.target[1].value, location_name: event.target[2].value, loc_lat: event.target[3].value, loc_long: event.target[4].value, depth: event.target[5].value, frames: selectedFrame, active: selectedActive, breed: event.target[10].value, notes: event.target[11].value, }).then((response) => {
-            console.log('response from server: ', response)
-            if (response.status === 200) {
-                window.alert(`New hive "${event.target[0].value}" created!`)
-                // window.location.reload()
-                navigate("/hivelist");
-            }
-        })
-
     }
-
 
     return (
         <div>
 
             <div className="hive">
                 <h2>Hive Details</h2>
-                <h3>Hive ID:</h3>
+                <h3>Hive ID: {hive_id}</h3>
             </div>
             <br />
-            <form onSubmit={handleSubmit}>
+            <form name="hiveForm" onSubmit={handleSubmit}>
                 <div>
                     <label for="nickname">Nickname:  </label>
-                    <input type="text" id="nickname" name="nickname" placeholder="Nickname" required />
+                    <input type="text" id="nickname" name="nickname" placeholder="Nickname" value={nickname} onChange={(e) => setNickname(e.target.value)} required />
                     <label for="install_date">&emsp;Install date:  </label>
-                    {/* <input type="date" id="install_date" name="install_date" value={today} /> */}
-                    <input type="date" id="install_date" name="install_date" required />
+                    <input type="date" id="install_date" name="install_date" value={install_date} onChange={(e) => setInstallDate(e.target.value)} />
                 </div>
                 <br />
                 <div>
                     <label for="location">Location:  </label>
-                    <input type="text" id="location" name="location" placeholder="Location" value={city} onChange={(e) => setCity(e.target.value)} />
+                    <input type="text" id="location" name="location" placeholder="Location" value={location_name} onChange={(e) => setLocationName(e.target.value)} />
                     <label for="latitude">&emsp;Latitude:  </label>
-                    <input type="text" id="latitude" name="latitude" placeholder="00.000000" value={lat} onChange={(e) => setLat(e.target.value)} />
+                    <input type="text" id="latitude" name="latitude" placeholder="00.000000" value={loc_lat} onChange={(e) => setLocLat(e.target.value)} />
                     <label for="longitude">&emsp;Longitude:  </label>
-                    <input type="text" id="longitude" name="longitude" placeholder="-00.000000" value={long} onChange={(e) => setLong(e.target.value)} />
+                    <input type="text" id="longitude" name="longitude" placeholder="-00.000000" value={loc_long} onChange={(e) => setLocLong(e.target.value)} />
                     {/* <a href="https://gps-coordinates.org/" target="_blank">Lat/Long Search</a> */}
                 </div>
                 <br />
@@ -104,7 +137,7 @@ const HiveDetail = () => {
                     <label for="depth">Main body depth:  </label>
                     <select id="depth" name="depth">
                         <option value="none"></option>
-                        <option value="deep">Deep</option>
+                        <option value="deep" selected>Deep</option>
                         <option value="medium">Medium</option>
                         <option value="shallow">Shallow</option>
                     </select>
@@ -131,22 +164,24 @@ const HiveDetail = () => {
                         <option value="russian">Russian</option>
                     </select>
 
-                    {/* <label for="removal_date">&emsp;Removal date:  </label>
-                    <input type="date" id="removal_date" name="removal_date" /> */}
                 </div>
                 <br />
                 <div>
                     <label for="notes">Notes:  </label>
                     <br />
-                    <textarea id="notes" name="notes" rows="4" cols="50" placeholder="Please enter other notes about the hive here.">
+                    <textarea id="notes" name="notes" rows="4" cols="50" placeholder="Please enter other notes about the hive here." value={notes} onChange={(e) => setNotes(e.target.value)} >
                     </textarea>
                 </div>
                 <br />
                 <div>
                     <input type="reset" />
+                    <div className="space"></div>
                     <input type="submit" />
                 </div>
             </form>
+            <br />
+            <br />
+            <button onClick={DeleteHive} className="delete">Delete Hive</button>
         </div>
     );
 }

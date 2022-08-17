@@ -2,17 +2,25 @@ import axios from 'axios'
 
 
 const Test = () => {
-    console.log('APITest loaded')
+    // console.log('APITest loaded')
+
+    axios.get('/inspections/1').then((response) => {
+        console.log(response.data.feeding)
+    })
+
+    // axios.put('/hives/1', { nickname: 'API Test', loc_lat: 41.3412, install_date: '2022-10-10', location_name: '', loc_long: null, frames: 10, depth: '', active: true, breed: 'Italian', notes: 'Notes for a test post from the test page' }).then((response) => {
+    //     console.log(response)
+    // })
 
     //////// Generic test - modify below ///////
-    axios.post('/inspections/', { appuser: 4, curr_hive: 14, inspection_date: '2022-10-10', temperature: 77.2, humidity: 44, pollen_type: null, pollen_count: null, queen_sight: true, brood: null, queen_cells: null, has_swarmed: false, supers: null, feeding: null, disease: null, meds: null, notes: 'Notes for a test post from the test page' }).then((response) => {
-        // axios.post('/hives/', { nickname: 'API Test', loc_lat: 41.3412, install_date: '2022-10-10', location_name: '', loc_long: null, frames: 10, depth: '', active: true, breed: 'Italian', removal_date: null, photo_url: null, notes: 'Notes for a test post from the test page' }).then((response) => {
-        console.log(response.headers.date)
-        // console.log(response.headers.location)
-        console.log(response.statusText)
-        console.log(response.status)
-        console.log('response ==', response)
-    })
+    // axios.post('/inspections/', { appuser: 4, curr_hive: 14, inspection_date: '2022-10-10', temperature: 77.2, humidity: 44, pollen_type: null, pollen_count: null, queen_sight: true, brood: null, queen_cells: null, has_swarmed: false, supers: null, feeding: null, disease: null, meds: null, notes: 'Notes for a test post from the test page' }).then((response) => {
+    //     // axios.post('/hives/', { nickname: 'API Test', loc_lat: 41.3412, install_date: '2022-10-10', location_name: '', loc_long: null, frames: 10, depth: '', active: true, breed: 'Italian', removal_date: null, photo_url: null, notes: 'Notes for a test post from the test page' }).then((response) => {
+    //     console.log(response.headers.date)
+    //     // console.log(response.headers.location)
+    //     console.log(response.statusText)
+    //     console.log(response.status)
+    //     console.log('response ==', response)
+    // })
 
     // axios.delete('/hives/12').then((response) => {
     //     console.log(response.headers.date)

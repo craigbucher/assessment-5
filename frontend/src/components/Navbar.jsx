@@ -1,24 +1,53 @@
 // sfc = 'stateless functional component'
 import { Link } from 'react-router-dom';
 import Beehive from '../assets/beehive-sm.png'
-console.log('Navbar loaded')
+import React, { useState } from 'react';
+import Popup from '../components/Popup';
+// console.log('Navbar loaded')
+
+// const testFunction = function () {
+//     console.log('clicked on about')
+//     alert('clicked on about')
+// }
+
+
 
 const Navbar = () => {
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const togglePopup = () => {
+        setIsOpen(!isOpen);
+    }
+
     return (
-        <nav className="navbar">
-            <img className='beehive' src={Beehive}></img>
-            <h2>Apis: Beehive Management</h2>
-            <div className="links">
-                <Link to="/home">Home</Link>
-                <Link to="/inspectionlist">List Inspections</Link>
-                <Link to="/newinspection">New Inspection</Link>
-                <Link to="/hives">List Hives</Link>
-                <Link to="/newhive">New Hive</Link>
-                <Link to="/about">About</Link>
-                <Link to="/test">test</Link>
-                <Link to="/logout"><b>Logout</b></Link>
-            </div>
-        </nav>
+        <div>
+            <nav className="navbar">
+                <img className='beehive' src={Beehive}></img>
+                <h2>Apis: Beehive Management</h2>
+                <div className="links">
+                    <Link to="/home">Home</Link>
+                    <Link to="/inspections">List Inspections</Link>
+                    <Link to="/newinspection">New Inspection</Link>
+                    <Link to="/hives">List Hives</Link>
+                    <Link to="/newhive">New Hive</Link>
+                    {/* <Link to="/about">About</Link> */}
+                    <Link to="#" onClick={() => togglePopup()}>About</Link>
+                    {/* <Link to="/test">test</Link> */}
+                    <Link to="/logout"><b>Logout</b></Link>
+                </div>
+            </nav>
+            {isOpen && <Popup
+                content={<>
+                    <h2 className='popup-text'>About Apis:</h2>
+                    <br />
+                    <p ><b className='popup-text'>Apis is an application to help you manage and record your periodic beehive inspections.  You can create an instance for each hive in your apiary and create and review inspection records for each hive. Hive records include the latitude and longitude of the installation location (which are auto-populated), breed of the bees installed, physical hive characteristics such as body depth and frame count, as well as a note section for additional specifications.<br />
+                        Inspection records include the inspection date, current temperature, humidity and pollen count (which are auto-populated through geolocation data), queen sightings, supplements and medications and any observations of disease.  Each record includes an unlimited-sized notes section for any additional observations or narrative that you'd like to record with the inspection.</b><br /></p>
+
+                </>}
+                handleClose={togglePopup}
+            />}
+        </div>
     );
 }
 

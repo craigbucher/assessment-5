@@ -51,16 +51,16 @@ def hives(request, hive_id=None):
         except:
             return HttpResponse('Error: malformed request')
 
-    # DELETE method deletes selected hive ID
-    elif request.method == "DELETE":
-        try:
-            print(f'Received a DELETE request for Hive {hive_id}')
-            hive = Hive.objects.all().get(id = hive_id)
-            print(hive)
-            hive.delete()
-            return JsonResponse({'status': f'record {hive_id} deleted'})
-        except:
-            return HttpResponse("Error: malformed request.")
+    # # DELETE method deletes selected hive ID
+    # elif request.method == "DELETE":
+    #     try:
+    #         print(f'Received a DELETE request for Hive {hive_id}')
+    #         hive = Hive.objects.all().get(id = hive_id)
+    #         print(hive)
+    #         hive.delete()
+    #         return JsonResponse({'status': f'record {hive_id} deleted'})
+    #     except:
+    #         return HttpResponse("Error: malformed request.")
         
     # default GET request - returns list of all hives in JSON format
     elif request.method == 'GET':
@@ -68,21 +68,21 @@ def hives(request, hive_id=None):
         hive_list = []
         hives = Hive.objects.all()
         for i in range(0, len(hives)):
-            category = {}
-            category['id'] = hives[i].id
-            category['nickname'] = hives[i].nickname
-            category['location_name'] = hives[i].location_name
-            category['loc_lat'] = hives[i].loc_lat
-            category['loc_long'] = hives[i].loc_long
-            category['install_date'] = hives[i].install_date
-            category['frames'] = hives[i].frames
-            category['depth'] = hives[i].depth
-            category['active'] = hives[i].active
-            category['breed'] = hives[i].breed
-            category['notes'] = hives[i].notes
-            hive_list.append(category)
+            hive = {}
+            hive['id'] = hives[i].id
+            hive['nickname'] = hives[i].nickname
+            hive['location_name'] = hives[i].location_name
+            hive['loc_lat'] = hives[i].loc_lat
+            hive['loc_long'] = hives[i].loc_long
+            hive['install_date'] = hives[i].install_date
+            hive['frames'] = hives[i].frames
+            hive['depth'] = hives[i].depth
+            hive['active'] = hives[i].active
+            hive['breed'] = hives[i].breed
+            hive['notes'] = hives[i].notes
+            hive_list.append(hive)
         response = {}
-        print(hive_list)
+        # print(hive_list)
         response['hives'] = hive_list
         return JsonResponse(response)
 
@@ -149,6 +149,106 @@ def inspections(request):
         response['inspections'] = inspection_list
         return JsonResponse(response)
 
+################################################################
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def hive_detail(request, hive_id):
+    # PUT request - updates Hive record
+    if request.method == 'PUT':
+        try:
+            print(f'received a PUT request for Hive ID: {hive_id}')
+            # # print(request.data)
+            hive = Hive.objects.all().get(id = hive_id)
+            # print(hive)
+            hive.nickname = request.data['nickname']
+            hive.install_date = request.data['install_date']
+            hive.location_name = request.data['location_name']
+            hive.loc_lat = request.data['loc_lat']
+            hive.loc_long = request.data['loc_long']
+            hive.depth = request.data['depth']
+            hive.frames = request.data['frames']
+            hive.active = request.data['active']
+            hive.breed = request.data['breed']
+            hive.notes = request.data['notes']
+            # # newHive = Hive(nickname = request.data['nickname'], location_name=request.data['location_name'], loc_lat=request.data['loc_lat'], loc_long=request.data['loc_long'], install_date=request.data['install_date'], frames=request.data['frames'], depth=request.data['depth'], active=request.data['active'], breed=request.data['breed'], notes=request.data['notes'])
+            # # newHive = Hive(nickname = 'Test hive', location_name='Chicago, IL', loc_lat=41.5852, loc_long=-87.8059, install_date='2022-08-15', frames=8, depth='Shallow', active=True, breed='Russian', notes='Some notes for this hive')
+            # newHive = Hive(nickname = nickname, location_name=location_name, loc_lat=loc_lat, loc_long=loc_long, install_date=install_date, frames=frames, depth=depth, active=active, breed=breed, notes=notes)
+            print(hive.nickname)
+            # hive.save()
+        #     return JsonResponse({'status': 'complete'})
+        except:
+            return HttpResponse('Error: malformed request')
+        # return HttpResponse('PUT complete')
+    
+        # DELETE method deletes selected hive_id
+        # elif request.method == "DELETE":
+        #     # try:
+        #     #     print(f'Received a DELETE request for Hive {hive_id}')
+        #     #     hive = Hive.objects.all().get(id = hive_id)
+        #     #     print(hive)
+        #     #     hive.delete()
+        #     #     return JsonResponse({'status': f'record {hive_id} deleted'})
+        #     # except:
+        #         return HttpResponse("Error: malformed request.")
+
+    # default GET request - returns info on hive specified by hive_id
+    elif request.method == 'GET':
+        print(f'received a GET request for Hive ID: {hive_id}')
+        print(request.user.id)
+        # hive_list = []
+        hives = Hive.objects.all().get(id = hive_id)
+        # for i in range(0, len(hives)):
+        hive = {}
+        hive['id'] = hives.id
+        hive['nickname'] = hives.nickname
+        hive['location_name'] = hives.location_name
+        hive['loc_lat'] = hives.loc_lat
+        hive['loc_long'] = hives.loc_long
+        hive['install_date'] = hives.install_date
+        hive['frames'] = hives.frames
+        hive['depth'] = hives.depth
+        hive['active'] = hives.active
+        hive['breed'] = hives.breed
+        hive['notes'] = hives.notes
+        # hive_list.append(hive)
+        # response = {}
+        print(hive)
+        # response['hives'] = hive_list
+        return JsonResponse(hive)
+        # return HttpResponse('hive detail completed')
+
+@api_view(['GET'])
+def inspection_detail(request, inspect_id):
+    # default GET request - returns inspection by inspect_id
+    print(f'received a GET request for Inspection ID: {inspect_id}')
+    # print(request.user)
+    inspection_list = []
+    inspections = Inspection.objects.all().get(id = inspect_id)
+    # print(inspections[3].hive.id)
+    # for i in range(0, len(inspections)):
+    inspection = {}
+    inspection['id'] = inspections.id
+    inspection['curr_hive'] = inspections.curr_hive.id
+    inspection['userID'] = inspections.appuser.id
+    inspection['inspection_date'] = inspections.inspection_date
+    inspection['temperature'] = inspections.temperature
+    inspection['humidity'] = inspections.humidity
+    inspection['pollen_type'] = inspections.pollen_type
+    # inspection['pollen_count'] = inspections.pollen_count
+    inspection['queen_sight'] = inspections.queen_sight
+    inspection['queen_cells'] = inspections.queen_cells
+    inspection['has_swarmed'] = inspections.has_swarmed
+    inspection['supers'] = inspections.supers
+    inspection['feeding'] = inspections.feeding
+    inspection['disease'] = inspections.disease
+    inspection['meds'] = inspections.meds
+    inspection['notes'] = inspections.notes
+    inspection_list.append(inspection)
+    response = {}
+    response['inspections'] = inspection_list
+    # print(inspection)
+    return JsonResponse(inspection)
+    # return HttpResponse('detail completed')
 
 #########################################################
 ################### Authentication ######################

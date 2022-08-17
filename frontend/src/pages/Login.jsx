@@ -1,6 +1,6 @@
 // https://www.codingnepalweb.com/login-and-registration-form-in-html/
 // https://www.codinglabweb.com/2022/02/login-registration-form-html-css-javascript.html
-
+import { useEffect } from 'react';
 import { useNavigate, Link } from "react-router-dom";
 import axios from 'axios';
 
@@ -19,6 +19,7 @@ const Login = () => {
                     if (response.data !== 'Invalid login credentials') {
                         navigate("/home");
                     } else {
+                        window.alert('Invalid login credentials!')
                         navigate("/login");
                     }
 
@@ -30,6 +31,10 @@ const Login = () => {
             navigate("/login");
         }
     }
+
+    // useEffect(() => {
+    //     window.location.reload()
+    // }, [])
 
     return (
         <div>

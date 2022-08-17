@@ -16,6 +16,7 @@ urlpatterns = [
     path('logout/', views.log_out),
     path('whoami/', views.who_am_i),
     path('hives/', views.hives, name = 'hives'),
-    path('hives/<int:hive_id>', views.hives, name = 'hives_delete'),
+    path('hives/<int:hive_id>', views.hive_detail, name = 'hive_detail'),
     path('inspections/', views.inspections, name = 'inspections'),
+    path('inspections/<int:inspect_id>', views.inspection_detail, name = 'inspection_detail')
 ]

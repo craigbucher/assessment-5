@@ -30,7 +30,7 @@ const HiveList = ({ hives, title }) => {
             {hives && hives.map((hive) => (
                 <div className="blog-preview" key={hive.id}>
                     <Link to={`${hive.id}`}>
-                        <h3>{hive.nickname}</h3>
+                        <h3>ID:{hive.id} - {hive.nickname}</h3>
                         <p>Notes: {hive.notes}</p>
                     </Link>
                     <br />
