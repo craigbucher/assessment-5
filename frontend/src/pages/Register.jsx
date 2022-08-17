@@ -13,6 +13,11 @@ const Register = () => {
         event.preventDefault()
         axios.post('/signup/', { first_name: event.target[0].value, last_name: event.target[1].value, email: event.target[2].value, password: event.target[3].value }).then((response) => {
             console.log('response from server: ', response)
+            if (response = 'Accout creation successful') {
+                window.alert(`Account ${event.target[2].value} created!`)
+            } else {
+                windows.alert('Account creation error')
+            }
         })
         navigate("/login");
     }
@@ -26,20 +31,20 @@ const Register = () => {
                 <form onSubmit={submitSignupForm} >
                     <br />
                     <label>
-                        <input type="first_name" name="first_name" placeholder="First Name" className='login' size='30' />
+                        <input type="first_name" name="first_name" placeholder="First Name" className='login' size='30' required />
                     </label>
                     <br />
                     <label>
-                        <input type="last_name" name="last_name" placeholder="Last Name" className='login' size='30' />
+                        <input type="last_name" name="last_name" placeholder="Last Name" className='login' size='30' required />
                     </label>
                     <br />
                     <label>
-                        <input type="email" name="email" placeholder="Email address" className='login' size='30' />
+                        <input type="email" name="email" placeholder="Email address" className='login' size='30' minlength='8' required />
                     </label>
                     <br />
 
                     <label>
-                        <input type="password" name="password" placeholder="Password" className='login' size='30' />
+                        <input type="password" name="password" placeholder="Password" className='login' size='30' required />
                     </label>
                     <br />
                     <br />

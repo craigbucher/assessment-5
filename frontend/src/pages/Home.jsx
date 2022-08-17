@@ -1,10 +1,8 @@
-import { useReducer } from 'react';
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
 console.log('Home loaded')
 function HomePage() {
-    const [count, setCount] = useState(0)
 
     const [user, setUser] = useState(null)  // <== user login state; inital = null, because no one logged in
 
@@ -20,6 +18,7 @@ function HomePage() {
 
     useEffect(() => {  // on page load, runs 'whoAmI', which sets 'user' 
         whoAmI()
+
     }, [])
 
     return (

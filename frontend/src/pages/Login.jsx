@@ -43,12 +43,12 @@ const Login = () => {
                 <form onSubmit={submitLoginForm} >
                     <br />
                     <label>
-                        <input type="email" name="email" placeholder="Email address" className='login' size='30' />
+                        <input type="email" name="email" placeholder="Email address" className='login' size='30' required />
                     </label>
                     <br />
 
                     <label>
-                        <input type="password" name="password" placeholder="Password" className='login' size='30' />
+                        <input type="password" name="password" placeholder="Password" className='login' size='30' required />
                     </label>
                     <br />
                     <input type="submit" value="Submit" className="submit" />

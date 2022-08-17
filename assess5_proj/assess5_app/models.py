@@ -43,7 +43,7 @@ class Inspection(models.Model):
     inspection_date=models.DateField(default=date.today, verbose_name="Date of inspection")
     temperature=models.DecimalField(max_digits=4, decimal_places=1, blank=True, null=True, default=None)
     humidity=models.DecimalField(max_digits=3, decimal_places=1, blank=True, null=True, default=None)
-    pollen_type=models.CharField(max_length = 32, blank=True, null=True, default=None, verbose_name="Pollen types")
+    pollen_type=models.CharField(max_length = 64, blank=True, null=True, default=None, verbose_name="Pollen types")
     pollen_count=models.IntegerField(blank=True, null=True, default=None, verbose_name="Pollen count")
     queen_sight=models.BooleanField(blank=True, null=True, default=None, verbose_name="Queen sighted")
     brood=models.BooleanField(blank=True, null=True, default=None, verbose_name="Capped brood or eggs")

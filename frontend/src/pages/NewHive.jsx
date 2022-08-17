@@ -115,7 +115,7 @@ const NewHive = () => {
 
             <div className="hive">
                 <h2>Hive Details</h2>
-                <h3>Hive ID:</h3>
+                {/* <h3>Hive ID:</h3> */}
             </div>
             <br />
             <form onSubmit={handleSubmit}>

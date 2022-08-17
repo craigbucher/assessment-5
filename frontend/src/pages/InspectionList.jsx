@@ -27,11 +27,10 @@ const InspectionList = ({ inspections, title }) => {
             <h2><u>{title}</u></h2>
             <br />
             {inspections && inspections.map((inspection) => (
-                <div className="blog-preview" key={inspection.id}>
-                    <Link to={`/inspections/${inspection.id}`}>
-                        <h3>ID:{inspection.id} - {inspection.inspection_date}</h3>
-                        <p>Notes: {inspection.notes}</p>
-                    </Link>
+                < div className="blog-preview" key={inspection.id} >
+                    <a href={`#/inspectiondetail/${inspection.id}`}><h3>ID:{inspection.id} - {inspection.inspection_date}</h3>
+                    </a>
+                    <p>Notes: {inspection.notes}</p>
                     <br />
                 </div>
             ))}

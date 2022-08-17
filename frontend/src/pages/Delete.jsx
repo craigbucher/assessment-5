@@ -1,15 +1,22 @@
 import Warning from '../assets/warning.png'
 import axios from 'axios'
-
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 
 const DeleteHive = () => {
+    let navigate = useNavigate();
+    let { hiveId } = useParams()
+    console.log(`delete request for hive #${hiveId}`)
 
     function confirmDelete() {
-        console.log('Delete confirmed')
+        axios.delete(`/hives/${hiveId}`).then((response) => {
+            console.log(response)
+            window.alert(`Hive ${hiveId} successfully deleted! 👍`)
+            navigate('/hives')
+        })
     }
 
     function confirmCancel() {
-        console.log('Cancelled')
+        navigate(-1)
     }
 
     return (

@@ -1,12 +1,14 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import DeleteHive from './Delete';
 
-const HiveDetail = (hive_id) => {
+const HiveDetail = () => {
     // console.log('Hive loaded')
     let navigate = useNavigate();
-    hive_id = 1;
+    let { hiveId } = useParams()
+    // console.log(hiveId, "detail")gfhfghg
+    // let hive_id = 1
     ///////////////////////////////////////////////////////
     ///////////////// Retrieve Hive Info //////////////////
     ///////////////////////////////////////////////////////
@@ -23,7 +25,7 @@ const HiveDetail = (hive_id) => {
     const [notes, setNotes] = useState(null)
 
     async function update() {
-        let response = await axios.get(`/hives/${hive_id}`);
+        let response = await axios.get(`/hives/${hiveId}`);
         setNickname(response.data.nickname)
         setInstallDate(response.data.install_date)
         setLocationName(response.data.location_name)
@@ -63,12 +65,17 @@ const HiveDetail = (hive_id) => {
     ///////////////////////////////////////////////////////
 
     function deleteHive() {
-
+        // console.log('delete hive')
+        // axios.delete(`/hives/${hiveId}`).then((response) => {
+        //     console.log(response)
+        //     window.alert(`Hive ${hiveId} successfully deleted! 👍`)
+        navigate(`/delete/${hiveId}`);
     }
+
 
     const handleSubmit = function (event) {
         event.preventDefault()
-        console.log('form submitted')
+        console.log('update submitted')
 
         // console.log('0 - nickname', event.target[0].value)
         // console.log('1 - install_date', event.target[1].value)
@@ -83,27 +90,37 @@ const HiveDetail = (hive_id) => {
         // console.log('10 - breed', event.target[10].value)
         // console.log('11 - notes', event.target[12].value)
 
-        // const depthButtons = document.querySelectorAll('input[name="frames"]');
-        // // console.log(radioButtons)
-        // let selectedFrame
-        // for (const depthButton of depthButtons) {
-        //     // console.log(radioButton.checked)
-        //     if (depthButton.checked) {
-        //         selectedFrame = depthButton.value;
-        //         // console.log(selectedFrame)
-        //         // break;
-        //     }
-        // }
-        // console.log(selectedFrame)
+        const depthButtons = document.querySelectorAll('input[name="frames"]');
+        // console.log(radioButtons)
+        let selectedFrame
+        for (const depthButton of depthButtons) {
+            // console.log(radioButton.checked)
+            if (depthButton.checked) {
+                selectedFrame = depthButton.value;
+                // console.log(selectedFrame)
+                // break;
+            }
+        }
+        console.log(selectedFrame)
 
-        // const activeButtons = document.querySelectorAll('input[name="active"]');
-        // let selectedActive
-        // for (const activeButton of activeButtons) {
-        //     if (activeButton.checked) {
-        //         selectedActive = activeButton.value;
-        //     }
-        // }
-        // console.log(selectedActive)
+        const activeButtons = document.querySelectorAll('input[name="active"]');
+        let selectedActive
+        for (const activeButton of activeButtons) {
+            if (activeButton.checked) {
+                selectedActive = activeButton.value;
+            }
+        }
+        console.log(selectedActive)
+
+        axios.put(`/hives/${hiveId}`, { nickname: event.target[0].value, install_date: event.target[1].value, location_name: event.target[2].value, loc_lat: event.target[3].value, loc_long: event.target[4].value, depth: event.target[5].value, frames: selectedFrame, active: selectedActive, breed: event.target[10].value, notes: event.target[11].value, }).then((response) => {
+            console.log('response from server: ', response)
+            if (response.status === 200) {
+                window.alert(`Hive "${event.target[0].value}" updated!`)
+                // window.location.reload()
+                navigate(`/hivedetail/${hiveId}`);
+            }
+        })
+
     }
 
     return (
@@ -111,7 +128,7 @@ const HiveDetail = (hive_id) => {
 
             <div className="hive">
                 <h2>Hive Details</h2>
-                <h3>Hive ID: {hive_id}</h3>
+                <h3>Hive ID: {hiveId}</h3>
             </div>
             <br />
             <form name="hiveForm" onSubmit={handleSubmit}>
@@ -176,14 +193,15 @@ const HiveDetail = (hive_id) => {
                 <div>
                     <input type="reset" />
                     <div className="space"></div>
-                    <input type="submit" />
+                    <input type="submit" value='Update' />
                 </div>
             </form>
             <br />
             <br />
-            <button onClick={DeleteHive} className="delete">Delete Hive</button>
+            <button onClick={deleteHive} className="delete">Delete Hive</button>
         </div>
     );
 }
+
 
 export default HiveDetail;

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios'
 
 const Inspections = () => {
-    console.log('inspections loaded')
+    // console.log('inspections loaded')
     const [inspections, setInspections] = useState(null)
     async function getInspections() {
         let response = await axios.get('/inspections');

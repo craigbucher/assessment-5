@@ -28,15 +28,18 @@ const HiveList = ({ hives, title }) => {
             <h2><u>{title}</u></h2>
             <br />
             {hives && hives.map((hive) => (
-                <div className="blog-preview" key={hive.id}>
-                    <Link to={`${hive.id}`}>
-                        <h3>ID:{hive.id} - {hive.nickname}</h3>
+                <div>
+                    {/* {console.log(hive.id, "testing")} */}
+                    < div className="blog-preview" key={hive.id} >
+                        <a href={`#/hivedetail/${hive.id}`}><h3>ID:{hive.id} - {hive.nickname}</h3>
+                        </a>
                         <p>Notes: {hive.notes}</p>
-                    </Link>
-                    <br />
+                        <br />
+                    </div>
                 </div>
-            ))}
-        </div>
+            ))
+            }
+        </div >
     );
 }
 

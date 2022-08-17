@@ -1,11 +1,12 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-const NewInspection = (inspect_id) => {
+const NewInspection = () => {
     // console.log('Inspection loaded')
     let navigate = useNavigate();
-    inspect_id = 1;
+    let { inspectId } = useParams()
+    // inspectId = 1;
     ///////////////////////////////////////////////////////
     ////////////// Retrieve Inspection Info ///////////////
     ///////////////////////////////////////////////////////
@@ -24,7 +25,7 @@ const NewInspection = (inspect_id) => {
     const [notes, setNotes] = useState(null)
 
     async function update() {
-        let response = await axios.get(`/inspections/${inspect_id}`);
+        let response = await axios.get(`/inspections/${inspectId}`);
         setInspectionDate(response.data.inspection_date)
         setTemp(response.data.temperature)
         setHumidity(response.data.humidity)
@@ -121,7 +122,7 @@ const NewInspection = (inspect_id) => {
                 <h2>Inspection Details</h2>
                 {/* <h3>User:&emsp;&emsp;</h3> */}
                 <br />
-                <h3>Inspection ID: {inspect_id}</h3>
+                <h3>Inspection ID: {inspectId}</h3>
             </div>
             <br />
             <form onSubmit={handleSubmit}>

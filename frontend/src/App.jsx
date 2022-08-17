@@ -69,10 +69,6 @@ function App() {
     whoAmI()
   }, [])
 
-  // if (user.username !== undefined) {
-  //   setIsAuthenticated(True)
-  // }
-
   return (
     <Router>
       <div className="App">
@@ -86,11 +82,11 @@ function App() {
             <Route path="/hives" element={<Hives />} />
             <Route path="/newhive" element={<NewHive />} />
             <Route path="/hivelist" element={<HiveList />} />
-            <Route path="/hivedetail" element={<HiveDetail />} />
+            <Route path="/hivedetail/:hiveId" element={<HiveDetail />} />
             <Route path="/inspections" element={<Inspections />} />
             <Route path="/newinspection" element={<NewInspection />} />
             <Route path="/inspectionlist" element={<InspectionList />} />
-            <Route path="/inspectiondetail" element={<InspectionDetail />} />
+            <Route path="/inspectiondetail/:inspectId" element={<InspectionDetail />} />
             <Route path="/about" element={<About />} />
             <Route path="/test" element={<Test />} />
             <Route path="/test2" element={<main style={{ padding: "1rem" }}>
@@ -99,7 +95,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/logout" element={<Logout />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/delete" element={<DeleteHive />} />
+            <Route path="/delete/:hiveId" element={<DeleteHive />} />
             <Route path="/*" element={<NotFound />} />
           </Routes>
         </div>

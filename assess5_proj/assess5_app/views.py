@@ -51,7 +51,7 @@ def hives(request, hive_id=None):
         except:
             return HttpResponse('Error: malformed request')
 
-    # # DELETE method deletes selected hive ID
+    # DELETE method deletes selected hive ID
     # elif request.method == "DELETE":
     #     try:
     #         print(f'Received a DELETE request for Hive {hive_id}')
@@ -157,7 +157,7 @@ def hive_detail(request, hive_id):
     if request.method == 'PUT':
         try:
             print(f'received a PUT request for Hive ID: {hive_id}')
-            # # print(request.data)
+            # print(request.data)
             hive = Hive.objects.all().get(id = hive_id)
             # print(hive)
             hive.nickname = request.data['nickname']
@@ -173,23 +173,24 @@ def hive_detail(request, hive_id):
             # # newHive = Hive(nickname = request.data['nickname'], location_name=request.data['location_name'], loc_lat=request.data['loc_lat'], loc_long=request.data['loc_long'], install_date=request.data['install_date'], frames=request.data['frames'], depth=request.data['depth'], active=request.data['active'], breed=request.data['breed'], notes=request.data['notes'])
             # # newHive = Hive(nickname = 'Test hive', location_name='Chicago, IL', loc_lat=41.5852, loc_long=-87.8059, install_date='2022-08-15', frames=8, depth='Shallow', active=True, breed='Russian', notes='Some notes for this hive')
             # newHive = Hive(nickname = nickname, location_name=location_name, loc_lat=loc_lat, loc_long=loc_long, install_date=install_date, frames=frames, depth=depth, active=active, breed=breed, notes=notes)
-            print(hive.nickname)
-            # hive.save()
-        #     return JsonResponse({'status': 'complete'})
+            # print(hive.nickname)
+            hive.save()
+            return JsonResponse({'status': 'complete'})
         except:
             return HttpResponse('Error: malformed request')
         # return HttpResponse('PUT complete')
     
         # DELETE method deletes selected hive_id
-        # elif request.method == "DELETE":
-        #     # try:
-        #     #     print(f'Received a DELETE request for Hive {hive_id}')
-        #     #     hive = Hive.objects.all().get(id = hive_id)
-        #     #     print(hive)
-        #     #     hive.delete()
-        #     #     return JsonResponse({'status': f'record {hive_id} deleted'})
-        #     # except:
-        #         return HttpResponse("Error: malformed request.")
+    elif request.method == "DELETE":
+        try:
+            print(f'Received a DELETE request for Hive {hive_id}')
+            hive = Hive.objects.all().get(id = hive_id)
+            print(hive)
+            hive.delete()
+            # return JsonResponse({'status': f'record {hive_id} deleted'})
+            return HttpResponse(f'record {hive_id} deleted')
+        except:
+            return HttpResponse("Error: malformed request.")
 
     # default GET request - returns info on hive specified by hive_id
     elif request.method == 'GET':

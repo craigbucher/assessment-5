@@ -21,6 +21,9 @@
   border-bottom: 1px solid #f2f2f2;
   border-radius: 8px;
   background-color: antiquewhite;
+  /* position: sticky;
+  top: 0;
+  z-index: 999; */
 }
 
 .navbar h2 {

@@ -192,7 +192,7 @@ const NewInspection = () => {
             if (response.data.status === 'complete') {
                 window.alert(`New inspection "${event.target[0].value}" created!`)
                 // window.location.reload()
-                navigate("/inspectionlist");
+                navigate("/inspections");
             }
         })
 
