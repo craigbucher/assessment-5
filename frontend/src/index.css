@@ -202,6 +202,16 @@ h3 {
   color: goldenrod;
 }
 
+.delete {
+  /* background: #f1356d; */
+  background: #be3e38;
+  color: #fff;
+  border: 0;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
 /* Popup style */
 .popup-box {
   position: fixed;
@@ -248,15 +258,6 @@ h3 {
 
 .popup-text {
   color: darkolivegreen;
-}
-
-.delete {
-  background: #f1356d;
-  color: #fff;
-  border: 0;
-  padding: 8px;
-  border-radius: 8px;
-  cursor: pointer;
 }
 
 /*======================================================  */

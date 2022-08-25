@@ -28,9 +28,9 @@ class Hive(models.Model):
     loc_long=models.DecimalField(max_digits=8, decimal_places=6, blank=True, null=True, default=None, verbose_name="Longitude")
     install_date=models.DateField(default=date.today, blank=True, null=True, verbose_name="Date bees installed")
     frames=models.IntegerField(default=10, blank=True, null=True, verbose_name="Hive frames")
-    depth=models.CharField(max_length = 7, default=None, verbose_name="Hive depth")
-    active=models.BooleanField(default=True, verbose_name="Hive is active")
-    breed=models.CharField(max_length = 9, default=None, verbose_name="Bee breed") #choices?
+    depth=models.CharField(max_length = 7, default=None, null=True, verbose_name="Hive depth")
+    active=models.BooleanField(default=True, null=True, blank=True, verbose_name="Hive is active")
+    breed=models.CharField(max_length = 9, default=None, null=True, verbose_name="Bee breed") #choices?
     removal_date=models.DateField(blank=True, null=True, default=None, verbose_name="Date removed")
     notes=models.TextField(blank=True, null=True, default=None) #default form widget for this field is TextArea
 

@@ -19,13 +19,6 @@ const NewInspection = () => {
     ////////////////////// Location ////////////////////////
     const [lat, setLat] = useState(null)
     const [long, setLong] = useState(null)
-    // axios.get('/location').then((response) => {
-
-    //     setLat(response.data.latitude);
-    //     setLong(response.data.longitude);
-    //     console.log('calling API')
-    // })
-    // console.log(latitude)
     async function location() {
         let response = await axios.get('/location');
         // console.log(response.data.latitude)
@@ -33,23 +26,10 @@ const NewInspection = () => {
         setLong(response.data.longitude)
         // return response.data;
         weather(response.data.latitude, response.data.longitude)
-        pollenCount(response.data.latitude, response.data.longitude)
+        // pollenCount(response.data.latitude, response.data.longitude)
     }
-    // location().then((data) => {
-    //     // console.log(data.latitude)
-    //     setLat(data.latitude)
-    //     setLong(data.longitude)
-    // });
 
     ////////////////////// Weather ////////////////////////
-    // const [temp, setTemp] = useState(null)
-    // const [humidity, setHumidity] = useState(null)
-    // axios.get('/weather', { params: { latitude: '41.5852', longitude: '-87.8059' } }).then((response) => {
-    //     setTemp(response.data.main.temp)
-    //     setHumidity(response.data.main.humidity)
-    // })
-
-    // async function weather() {
     const [temp, setTemp] = useState(null)
     const [humidity, setHumidity] = useState(null)
     async function weather(this_lat, this_long) {
@@ -59,14 +39,6 @@ const NewInspection = () => {
         setHumidity(response.data.main.humidity)
         // return response.data;
     }
-
-    // const [temp, setTemp] = useState(null)
-    // const [humidity, setHumidity] = useState(null)
-    // // weather().then((data) => console.log(data));
-    // weather().then((data) => {
-    //     setTemp(data.main.temp)
-    //     setHumidity(data.main.humidity)
-    // });
 
     ////////////////////// Pollen ////////////////////////
     const [pollen, setPollen] = useState(null)
@@ -78,19 +50,15 @@ const NewInspection = () => {
     // //    // console.log(pollen)
     // //    setPollen(pollenText)
     // //})
-    async function pollenCount(this_lat, this_long) {
-        let response = await axios.get('/pollen', { params: { latitude: this_lat, longitude: this_long } });
-        // return response.data;
-        let count = response.data.data[0].Count
-        // console.log(response.data)
-        let pollenText = `Tree pollen: ${count.tree_pollen}, Grass pollen: ${count.grass_pollen}, Weed pollen: ${count.weed_pollen}`
-        setPollen(pollenText)
-    }
-    // pollenCount().then((data) => {
-    //     let count = data.data[0].Count
+
+    // async function pollenCount(this_lat, this_long) {
+    //     let response = await axios.get('/pollen', { params: { latitude: this_lat, longitude: this_long } });
+    //     // return response.data;
+    //     let count = response.data.data[0].Count
+    //     // console.log(response.data)
     //     let pollenText = `Tree pollen: ${count.tree_pollen}, Grass pollen: ${count.grass_pollen}, Weed pollen: ${count.weed_pollen}`
-    //     setPollen(pollenText);
-    // })
+    //     setPollen(pollenText)
+    // }
 
     ///////////////////////////////////////////////////////
     ////////////////////// Logging  ///////////////////////
@@ -142,10 +110,14 @@ const NewInspection = () => {
         // console.log('2 - humidity', event.target[2].value)
         // console.log('3 - pollen_type', event.target[3].value)
         // console.log('4 - queen_sight', event.target[4].value)
+        // console.log('5 - queen_sight', event.target[5].value)
         // console.log('6 - queen_cells', event.target[6].value)
+        // console.log('7 - queen_cells', event.target[7].value)
         // console.log('8 - has_swarmed', event.target[8].value)
+        // console.log('9 - has_swarmed', event.target[9].value)
         // console.log('10 - feeding', event.target[10].value)
         // console.log('11 - supers', event.target[11].value)
+        // console.log('12 - supers', event.target[12].value)
         // console.log('13 - disease', event.target[13].value)
         // console.log('14 - meds', event.target[14].value)
         // console.log('15 - notes', event.target[15].value)
@@ -203,7 +175,7 @@ const NewInspection = () => {
             <div className="inspection">
                 <h2>Inspection Details</h2>
                 <h3>User:&emsp;&emsp;</h3>
-                <h3>Inspection ID:</h3>
+                {/* <h3>Inspection ID:</h3> */}
             </div>
             <br />
             <form onSubmit={handleSubmit}>
@@ -222,8 +194,8 @@ const NewInspection = () => {
                 <div>
                     <label for="pollen">Pollen type(s):  </label>
                     <input type="text" id="pollen" name="pollen" placeholder="pollen" value={pollen} size='50' onChange={(e) => setPollen(e.target.value)} />
-                    <label for="count">&emsp;Pollen count:</label>
-                    <input type="text" id="count" name="count" placeholder="count" />
+                    {/* <label for="count">&emsp;Pollen count:</label>
+                    <input type="text" id="count" name="count" placeholder="count" /> */}
                 </div>
                 <div>
                     <br />

@@ -14,7 +14,7 @@ const Inspections = () => {
         // }
         // console.log(hiveList)
         // setHives(response.data.hives)
-        console.log(result)
+        // console.log(result)
         setInspections(result)
     }
 
